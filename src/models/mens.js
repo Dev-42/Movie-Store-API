@@ -32,6 +32,8 @@ const menSchema = mongoose.Schema({
     },
 })
 
+menSchema.index({ranking : 1})
+
 // We are creating a collection with name as "Mens"
 const MensRanking = mongoose.model('Men' , menSchema)
 

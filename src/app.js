@@ -23,10 +23,33 @@ app.post('/mens', async(req,res) => {
             event
         })
        const menDataSaved =  await men.save()
-       res.send(menDataSaved)
+       res.status(201).send(menDataSaved)
     }catch(e){
+        res.status(400).send(e)
         console.log(e)
-        console.log("Post request failed")
+    }
+})
+
+// HANDLING GET REQUEST for single user based upon ranking
+app.get('/mens/:id',async(req,res) => {
+    try{
+        const _id = req.params.id
+        const getMen = await MensRanking.find({ranking : _id})
+        res.send(getMen)
+    }catch(e){
+        res.status(400).send(e)
+        console.log(e)
+    }
+})
+
+// HANDLING GET REQUESTS FOR ALL USERS
+app.get('/mens/',async(req,res) => {
+    try{
+        const getMens = await MensRanking.find({})
+        res.send(getMens)
+    }catch(e){
+        res.status(400).send(e)
+        console.log(e)
     }
 })
 
