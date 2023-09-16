@@ -33,8 +33,8 @@ app.post('/mens', async(req,res) => {
 // HANDLING GET REQUEST for single user based upon ranking
 app.get('/mens/:id',async(req,res) => {
     try{
-        const _id = req.params.id
-        const getMen = await MensRanking.find({ranking : _id})
+        const id = req.params.id
+        const getMen = await MensRanking.find({ranking : id})
         res.send(getMen)
     }catch(e){
         res.status(400).send(e)
@@ -53,6 +53,22 @@ app.get('/mens/',async(req,res) => {
     }
 })
 
+// HANDLING PATCH REQUESTS TO UPDATE AN INDIDIVIDUAL USER
+app.put('/mens/:userID' , async (req,res) => {
+    const {userID} = req.params
+    const payload = req.body
+
+    const user = await MensRanking.findByIdAndUpdate({_id : userID} , payload)
+
+    res.send({user})
+})
+
+// HANDLING DELETE REQUESTS
+app.delete('/mens/:userID' , async (req,res) => {
+    const {userID} = req.params
+    const user = await MensRanking.findByIdAndDelete({_id : userID})
+    res.send({user})
+})
 
 app.listen(port, async() => {
     try{
